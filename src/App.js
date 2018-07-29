@@ -29,6 +29,32 @@ class App extends Component {
         id: 1,
       }]
     }
+
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    }
+
+  addTrack(track) {
+    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id))
+    {
+      return ;
+    }
+  }
+
+  removeTrack(track) {
+    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id))
+    {
+      return ;
+    }
+  }
+
+
+//not working, needs to be revisited!
+  updatePlaylistName(name) {
+    this.setState({
+      playlistName: name
+    })
   }
 
   searchSpotify(searchQuery) {
@@ -42,8 +68,14 @@ class App extends Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults}/>
-            <Playlist playlistName={this.playlistName} playlistTracks={this.playlistTracks} />
+            <SearchResults
+              searchResults={this.state.searchResults} />
+            <Playlist
+              playlistName={this.playlistName}
+              playlistTracks={this.playlistTracks}
+              onNameChange={this.updatePlaylistName}
+              onRemove={this.removeTrack}
+              onAdd={this.addTrack} />
           </div>
         </div>
       </div>
