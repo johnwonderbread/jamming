@@ -51,7 +51,6 @@ class App extends Component {
     }
   }
 
-
 //not working, needs to be revisited!
   updatePlaylistName(name) {
     this.setState({
@@ -64,13 +63,16 @@ class App extends Component {
   }
 
   searchSpotify(searchQuery) {
-    Spotify.searchSpotify(searchQuery).then(tracks =>
+    Spotify.searchSpotify(searchQuery).then(track =>
       this.setState({
-        searchResults: tracks
+        searchResults: track
       }));
   }
 
   render() {
+
+console.log(this.state.searchResults)
+
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>

@@ -16,7 +16,7 @@ const Spotify = {
     }
 
     let url = window.location.href;
-    accessToken = this.extract(url, "access_token", "&");
+    accessToken = this.extract(url, "access_token=", "&");
 
     if (accessToken) {
       expiresIn = this.extract(url, "expires_in=", "&");
