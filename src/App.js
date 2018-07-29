@@ -2,19 +2,32 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResults from './components/SearchResults/SearchResults.js';
+import Playlist from './components/Playlist/Playlist.js';
 import './App.css';
 
+
+
+
 class App extends Component {
+
   constructor(props) {
     super(props);
+
+    this.playlistName = 'Rock out with your cock out';
+    this.playlistTracks = [{
+      name: 'Thrice',
+      artist: 'Thrice',
+      album: 'Thrice',
+      id: 1
+    }];
+
     this.state = {
       searchResults: [{
         name: '',
         artist: '',
         album: '',
-        id: '',
+        id: 1,
       }]
-
     }
   }
 
@@ -30,7 +43,7 @@ class App extends Component {
           <SearchBar />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults}/>
-            {/*Add a Playlist component*/}
+            <Playlist playlistName={this.playlistName} playlistTracks={this.playlistTracks} />
           </div>
         </div>
       </div>
