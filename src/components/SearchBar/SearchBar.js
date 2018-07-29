@@ -15,8 +15,9 @@ class SearchBar extends React.Component {
     this.setState({searchQuery: event.target.value});
   }
 
+  // ~step 70-73 in the tutorial, will need revisited.
   handleSearch(event) {
-    this.props.searchSpotify(this.state.searchQuery);
+    this.props.searchSpotify(this.state.searchSpotify);
     event.preventDefault();
   }
 

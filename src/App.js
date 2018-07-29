@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResults from './components/SearchResults/SearchResults.js';
 import Playlist from './components/Playlist/Playlist.js';
+import Spotify from './util/Spotify.js';
 import './App.css';
 
 
@@ -15,9 +16,9 @@ class App extends Component {
 
     this.playlistName = 'Rock out with your cock out';
     this.playlistTracks = [{
-      name: 'Thrice',
+      name: 'Stare at the Sun',
       artist: 'Thrice',
-      album: 'Thrice',
+      album: 'Artist in the Ambulance',
       id: 1
     }];
 
@@ -33,6 +34,7 @@ class App extends Component {
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.searchSpotify = this.searchSpotify.bind(this);
     }
 
   addTrack(track) {
@@ -57,8 +59,15 @@ class App extends Component {
     })
   }
 
-  searchSpotify(searchQuery) {
+  savePlaylist() {
+     this.savePlaylist = this.savePlaylist.bind(this);
+  }
 
+  searchSpotify(searchQuery) {
+    Spotify.searchSpotify(searchQuery).then(tracks =>
+      this.setState({
+        searchResults: tracks
+      }));
   }
 
   render() {
@@ -66,7 +75,7 @@ class App extends Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar />
+          <SearchBar onSearch={this.searchSpotify} />
           <div className="App-playlist">
             <SearchResults
               searchResults={this.state.searchResults} />
@@ -75,7 +84,8 @@ class App extends Component {
               playlistTracks={this.playlistTracks}
               onNameChange={this.updatePlaylistName}
               onRemove={this.removeTrack}
-              onAdd={this.addTrack} />
+              onAdd={this.addTrack}
+              onSave={this.savePlaylist} />
           </div>
         </div>
       </div>
