@@ -11,20 +11,19 @@ class SearchBar extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({searchQuery: event.target.value});
+  handleSearch(event) {
+    this.props.onSearch(this.state.searchQuery);
   }
 
-  // ~step 70-73 in the tutorial, will need revisited.
-  handleSearch(event) {
-    this.props.searchSpotify(this.state.searchSpotify);
-    event.preventDefault();
+  handleChange(event) {
+    this.setState({searchQuery: event.target.value});
   }
 
   render() {
     return (
       <div className="SearchBar">
-        <input placeholder="Enter A Song, Album, or Artist" onChange={this.handleChange} />
+        <input placeholder="Enter A Song, Album, or Artist" 
+               onChange={this.handleChange} />
         <a onClick={this.handleSearch}>SEARCH</a>
       </div>
     )

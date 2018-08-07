@@ -51,7 +51,6 @@ class App extends Component {
     }
   }
 
-
 //not working, needs to be revisited!
   updatePlaylistName(name) {
     this.setState({
@@ -78,7 +77,8 @@ class App extends Component {
           <SearchBar onSearch={this.searchSpotify} />
           <div className="App-playlist">
             <SearchResults
-              searchResults={this.state.searchResults} />
+              searchResults={this.state.searchResults}
+              onAdd={this.addTrack} />
             <Playlist
               playlistName={this.playlistName}
               playlistTracks={this.playlistTracks}
