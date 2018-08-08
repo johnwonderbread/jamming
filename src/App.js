@@ -6,8 +6,6 @@ import Playlist from './components/Playlist/Playlist.js';
 import Spotify from './util/Spotify.js';
 import './App.css';
 
-const accessToken = Spotify.getAccessToken(); 
-
 class App extends Component {
 
   constructor(props) {
@@ -68,8 +66,8 @@ class App extends Component {
               searchResults={this.state.searchResults}
               onAdd={this.addTrack} />
             <Playlist
-              playlistName={this.playlistName}
-              playlistTracks={this.playlistTracks}
+              playlistName={this.state.playlistName}
+              playlistTracks={this.state.playlistTracks}
               onNameChange={this.updatePlaylistName}
               onRemove={this.removeTrack}
               onAdd={this.addTrack}
