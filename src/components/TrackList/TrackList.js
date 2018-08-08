@@ -4,6 +4,7 @@ import './TrackList.css';
 
 class TrackList extends React.Component {
   render() {
+    console.log('TrackList Props', this.props);
     return (
       <div className="TrackList">
         {
@@ -13,7 +14,8 @@ class TrackList extends React.Component {
               key={tracks.id}
               onAdd={this.props.onAdd}
               onRemove={this.props.onRemove}
-              isRemoval={this.props.isRemoval} />)
+              isRemoval={this.props.isRemoval}
+            />)
         }
       </div>
     )

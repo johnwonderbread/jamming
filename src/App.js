@@ -6,36 +6,24 @@ import Playlist from './components/Playlist/Playlist.js';
 import Spotify from './util/Spotify.js';
 import './App.css';
 
-
-
+const accessToken = Spotify.getAccessToken(); 
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-
-    this.playlistName = 'Rock out with your cock out';
-    this.playlistTracks = [{
-      name: 'Stare at the Sun',
-      artist: 'Thrice',
-      album: 'Artist in the Ambulance',
-      id: 1
-    }];
-
     this.state = {
-      searchResults: [{
-        name: '',
-        artist: '',
-        album: '',
-        id: 1,
-      }]
+      searchResults: [],
+      playlistName: 'New Playlist',
+      playlistTracks: []    
     }
-
+   
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
-    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
     this.searchSpotify = this.searchSpotify.bind(this);
-    }
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+  }
 
   addTrack(track) {
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id))

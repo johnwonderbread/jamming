@@ -1,11 +1,13 @@
 import React from 'react';
 import { access } from 'fs';
 
-const clientId = '2ff707f4950f437d85f73f89a24455f9'; // Your client id
+const clientId = '1973d8a68c134779b727749b476716b4'; // Your client id
 const client_secret = '27e8c8571a7b48548e49b24c02c99aa7'; // Your secret
 const redirectUri = 'http://localhost:3000/callback/'; // Your redirect uri
 
 let accessToken;
+let hasAccessToken;
+let hasExpiresIn;
 
 const Spotify = {
 
@@ -14,12 +16,12 @@ const Spotify = {
       return accessToken;
     }
 
-    const hasAccessToken = window.location.href.match(/access_token=([^&]*)/); 
-    const hasExpiresIn = window.location.href.match(/expires_in=([^&]*)/);
-    
-    if (hasAccessToken && hasExpiresIn) {
+    if (!hasAccessToken) {
+      let hasAccessToken = window.location.href.match(/access_token=([^&]*)/); 
+      let hasExpiresIn = window.location.href.match(/expires_in=([^&]*)/);     
+    } else if (hasAccessToken) {
       accessToken = hasAccessToken[1];
-      const expiresIn = Number(hasExpiresIn[1]);
+      let expiresIn = Number(hasExpiresIn[1]);
       window.setTimeout(() => accessToken = '', expiresIn * 1000);
       window.history.pushState('Access Token', null, '/');
       console.log('Token success!')
@@ -31,10 +33,7 @@ const Spotify = {
   },
 
   searchSpotify(searchQuery) {
-    const accessToken = Spotify.getAccessToken(); 
-    console.log(accessToken);
     return fetch(`https://api.spotify.com/v1/search?q=${searchQuery}&type=track`, 
-      {mode: 'no-cors'},
       {
         headers: {
           Authorization: `Bearer ${accessToken}`
