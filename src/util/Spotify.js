@@ -16,10 +16,10 @@ const Spotify = {
       return accessToken;
     }
 
-    if (!hasAccessToken) {
-      let hasAccessToken = window.location.href.match(/access_token=([^&]*)/); 
-      let hasExpiresIn = window.location.href.match(/expires_in=([^&]*)/);     
-    } else if (hasAccessToken) {
+    let hasAccessToken = window.location.href.match(/access_token=([^&]*)/); 
+    let hasExpiresIn = window.location.href.match(/expires_in=([^&]*)/);     
+
+    if (hasAccessToken) {  
       accessToken = hasAccessToken[1];
       let expiresIn = Number(hasExpiresIn[1]);
       window.setTimeout(() => accessToken = '', expiresIn * 1000);
@@ -33,7 +33,6 @@ const Spotify = {
   },
 
   searchSpotify(searchQuery) {
-    const accessToken = Spotify.getAccessToken(); 
     return fetch(`https://api.spotify.com/v1/search?q=${searchQuery}&type=track`, 
       {
         headers: {

@@ -4,7 +4,10 @@ import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResults from './components/SearchResults/SearchResults.js';
 import Playlist from './components/Playlist/Playlist.js';
 import Spotify from './util/Spotify.js';
+//import update from 'immutability-helper';
 import './App.css';
+
+const accessToken = Spotify.getAccessToken(); 
 
 class App extends Component {
 
@@ -25,19 +28,27 @@ class App extends Component {
 
   addTrack(track) {
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id))
-    {
+    { 
       return ;
+    } else {
+      var joined = this.state.playlistTracks.concat(track);
+      this.setState({ playlistTracks: joined })
+      console.log(this.state.playlistName)
     }
+      /* achieved with another method, but this is interesting: https://medium.freecodecamp.org/handling-state-in-react-four-immutable-approaches-to-consider-d1f5c00249d5
+      let playlistTracks = update(this.state.playlistTracks, {$merge: {[]: }})
+      this.setState(this.playlistTracks);
+      ^^^ failed attempt at one of the suggestions in the medium article
+      */
   }
 
   removeTrack(track) {
-    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id))
-    {
-      return ;
-    }
+      var array = this.state.playlistTracks; // make a separate copy of the array
+      var index = array.indexOf(track)
+      array.splice(index, 1);
+      this.setState({ playlistTracks: array});
   }
 
-//not working, needs to be revisited!
   updatePlaylistName(name) {
     this.setState({
       playlistName: name
@@ -64,7 +75,8 @@ class App extends Component {
           <div className="App-playlist">
             <SearchResults
               searchResults={this.state.searchResults}
-              onAdd={this.addTrack} />
+              onAdd={this.addTrack}
+              onRemove={this.removeTrack} />
             <Playlist
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
