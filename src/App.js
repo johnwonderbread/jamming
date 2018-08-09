@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResults from './components/SearchResults/SearchResults.js';
 import Playlist from './components/Playlist/Playlist.js';
@@ -55,8 +54,17 @@ class App extends Component {
     })
   }
 
-  savePlaylist() {
-     this.savePlaylist = this.savePlaylist.bind(this);
+  savePlaylist(playlistName, playlistTracks) {
+    Spotify.savePlaylist();
+
+    this.setState({
+      playlistName: []
+    });
+    
+    this.setState({
+      playlistTracks: []
+    })
+    
   }
 
   searchSpotify(searchQuery) {
