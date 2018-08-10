@@ -62,17 +62,66 @@ const Spotify = {
           });
   },
 
-  savePlaylist(playlistName, playlistTracks) {
+  savePlaylist(playlistName, trackUris) {
     let userId;
     let playlistId;
-    const headers = { Authorization: `Bearer ${accessToken}` };
+    const headers = { headers: { Authorization: `Bearer ${accessToken}` } };
+    const header = { Authorization: `Bearer ${accessToken}` };
     let userUrl = `https://api.spotify.com/v1/me`;
 
-    return fetch(userUrl, { headers: headers }).then(
+    fetch(userUrl, headers)
+      .then(response => response.json())
+      .then(jsonResponse => userId = jsonResponse.id)
+      .then(() => {
+        const createPlaylistUrl = `https://api.spotify.com/v1/users/${userId}/playlists`;
+        fetch(createPlaylistUrl, {
+          method: 'POST',
+          headers: header,
+          body: JSON.stringify({ name: playlistName })
+        })
+          .then(response => response.json())
+          .then(jsonResponse => playlistId = jsonResponse.id)
+          .then(() => {
+            const createTrackUrl = `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`;
+            fetch(createTrackUrl, {
+              method: 'POST',
+              headers: header,
+              body: JSON.stringify({ uris: trackUris })
+            })
+          })
+      })
+  }
+}
+
+export default Spotify;
+
+
+// bunch of junk code from trial and error down below. 
+// only keeping it here to learn from in the future. 
+
+/*
+    try {
+      const response = await fetch(userUrl, headers);
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        return userId = jsonResponse.id;
+      }
+      throw new Error('Request Failed!');
+    } catch (error) {
+      console.log(error);
+    }
+
+    )
+
+    console.log(userId);
+    */
+
+    /*.then(
       response => response.json().then(jsonResponse => {
         console.log(jsonResponse.id);
         return userId = jsonResponse.id;
       }).then(
+        console.log(userId),
         fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
           method: `POST`,
           headers: headers,
@@ -95,7 +144,7 @@ const Spotify = {
                 }))
           )))
   }
-}
+}*/
 
 /*
 savePlaylist(name, trackUris) {
@@ -134,5 +183,3 @@ savePlaylist(name, trackUris) {
         })
     })
   */
-
-export default Spotify;
