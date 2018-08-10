@@ -2,7 +2,7 @@ import React from 'react';
 import { access } from 'fs';
 
 const clientId = '1973d8a68c134779b727749b476716b4'; // Your client id
-const redirectUri = 'http://localhost:3000/callback/'; // Your redirect uri
+const redirectUri = 'http://johnbejamming.surge.sh'; // Your redirect uri
 
 let accessToken;
 let hasAccessToken;
