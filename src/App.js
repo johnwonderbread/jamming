@@ -6,7 +6,7 @@ import Spotify from './util/Spotify.js';
 //import update from 'immutability-helper';
 import './App.css';
 
-const accessToken = Spotify.getAccessToken(); 
+const accessToken = Spotify.getAccessToken();
 
 class App extends Component {
 
@@ -15,9 +15,9 @@ class App extends Component {
     this.state = {
       searchResults: [],
       playlistName: 'New Playlist',
-      playlistTracks: []    
+      playlistTracks: []
     }
-   
+
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
@@ -26,26 +26,24 @@ class App extends Component {
   }
 
   addTrack(track) {
-    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id))
-    { 
-      return ;
+    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
     } else {
       var joined = this.state.playlistTracks.concat(track);
       this.setState({ playlistTracks: joined })
       console.log(this.state.playlistName)
     }
-      /* achieved with another method, but this is interesting: https://medium.freecodecamp.org/handling-state-in-react-four-immutable-approaches-to-consider-d1f5c00249d5
-      let playlistTracks = update(this.state.playlistTracks, {$merge: {[]: }})
-      this.setState(this.playlistTracks);
-      ^^^ failed attempt at one of the suggestions in the medium article
-      */
+    /* achieved with another method, but this is interesting: https://medium.freecodecamp.org/handling-state-in-react-four-immutable-approaches-to-consider-d1f5c00249d5
+    let playlistTracks = update(this.state.playlistTracks, {$merge: {[]: }})
+    this.setState(this.playlistTracks);
+    ^^^ failed attempt at one of the suggestions in the medium article
+    */
   }
 
   removeTrack(track) {
-      var array = this.state.playlistTracks; // make a separate copy of the array
-      var index = array.indexOf(track)
-      array.splice(index, 1);
-      this.setState({ playlistTracks: array});
+    this.setState({
+      playlistTracks: this.state.playlistTracks.filter(playlistTrack => playlistTrack.id !== track.id)
+    });
   }
 
   updatePlaylistName(name) {
@@ -57,11 +55,11 @@ class App extends Component {
   savePlaylist(playlistName, playlistTracks) {
     const trackUris = this.state.playlistTracks.map(playlistTracks => playlistTracks.uri);
     Spotify.savePlaylist(this.state.playlistName, trackUris);
-    
+
     this.setState({
       searchResults: [],
-      playlistName: 'New Playlist', 
-    }); 
+      playlistName: 'New Playlist',
+    });
   }
 
   searchSpotify(searchQuery) {

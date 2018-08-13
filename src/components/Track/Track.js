@@ -3,23 +3,23 @@ import './Track.css';
 
 class Track extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.renderAction = this.renderAction.bind(this);
   }
 
-  addTrack(){
+  addTrack() {
     this.props.onAdd(this.props.track);
   }
 
-  removeTrack(){
+  removeTrack() {
     this.props.onRemove(this.props.track);
   }
 
-  renderAction(){
-    if(this.props.isRemoval) {
+  renderAction() {
+    if (this.props.isRemoval) {
       return (
         <a className="Track-action"
           id={this.props.track.key}
@@ -44,7 +44,7 @@ class Track extends React.Component {
           <h3>{this.props.track.name}</h3>
           <p>{`${this.props.track.artist} | ${this.props.track.album}`}></p>
         </div>
-      { this.renderAction() }
+        {this.renderAction()}
       </div>
     )
   }
